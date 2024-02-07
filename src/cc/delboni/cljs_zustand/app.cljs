@@ -5,6 +5,8 @@
             [helix.core :refer [$]]
             [helix.dom :as d]))
 
+(def ->cljs (fn [state] (js->clj state :keywordize-keys true)))
+
 (defn sleep [ms]
   (js/Promise.
    (fn [res _rej]
@@ -42,8 +44,8 @@
 
 ;; app
 (defnc app []
-  (let [counter (use-counter-store (fn [state] (js->clj state :keywordize-keys true)))
-        counter-async (use-counter-async-store (fn [state] (js->clj state :keywordize-keys true)))]
+  (let [counter (use-counter-store ->cljs)
+        counter-async (use-counter-async-store ->cljs)]
     (d/div
       (d/h1 "cljs-zustand")
       (d/div
